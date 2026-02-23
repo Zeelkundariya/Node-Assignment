@@ -36,3 +36,5 @@ npm install
 npm start
 
 # Deployed link
+Render : https://node-assignment-1jav.onrender.com
+Postman : https://documenter.getpostman.com/view/50840741/2sBXcEmgS1
