@@ -145,3 +145,19 @@ app.get("/students/branch/:branchName", (req, res) =>{
 app.listen(PORT, ()=>{
     console.log('server running on http: //localhost:{3000}')
 });
+
+
+
+
+
+
+app.get("/students/sememster/:semester",(req,res)=> {
+  const semester = paraInt(req.params.semester);
+
+  if(isNaN(semester)){
+    return res.status(400).json({message: "Not found"});
+  }
+
+  const result = students.filter(s => s.semester === semester);
+  res.status(200).json(result)
+})
