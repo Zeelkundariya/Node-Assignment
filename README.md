@@ -89,3 +89,5 @@ npm install
 npm start
 
 # Deployed link
+Render : https://node-assignment-3-1hpo.onrender.com
+Postman : https://documenter.getpostman.com/view/50840741/2sBXcGEzuD
