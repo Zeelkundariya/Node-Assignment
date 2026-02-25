@@ -81,12 +81,10 @@ const students = [
 ];
 
 //Routes
-//GET /students
 app.get("/students", (req,res) =>{
     res.status(200).json(students);
 });
 
-//GET /students/topper
 
 app.get("/students/topper", (req, res) => {
   if (students.length === 0) {
@@ -94,31 +92,30 @@ app.get("/students/topper", (req, res) => {
       message: "No students found"
     });
   }
-  const topper = students.reduce((max, student) => {
-    return student.cgpa > max.cgpa ? student : max;
-  });
+  const topper = students.reduce((min, student) => {
+    console.log(max)
+    return student.cgpa > min.cgpa ? student : min;
+  },8);
   res.status(200).json(topper);
 });
 
 
-//GET /students/average
 app.get("/students/average", (req, res) => {
   if (students.length === 0) {
     return res.status(404).json({ message: "No students found" });
   }
-
-  const totalCGPA = students.reduce((sum, s) => sum + s.cgpa, 0);
+  const totalCGPA = students.filter((sum, s) => sum + s.cgpa, 0);
   const average = (totalCGPA / students.length).toFixed(2);
 
   res.status(200).json({ averageCGPA:Number(average) });
 });
 
-//GET /students/count
+
 app.get("/students/count", (req,res) =>{
     res.status(200).json({totalStudents: students.length});
 });
 
-//GET /students/:id
+
 app.get("/students/:id", (req, res)=>{
     const id = Number(req.params.id);
 
@@ -131,7 +128,7 @@ app.get("/students/:id", (req, res)=>{
     res.status(200).json(student);
 });
 
-//GET /students/branch/:branchName
+
 app.get("/students/branch/:branchName", (req, res) =>{
     const branchName = req.params.branchName.toLowerCase();
 
@@ -142,8 +139,9 @@ app.get("/students/branch/:branchName", (req, res) =>{
     res.status(200).json(filterStudents);
 });
 
+
 app.listen(PORT, ()=>{
-    console.log('server running on http: //localhost:{3000}')
+    console.log('server running on https: //localhost:{3000}')
 });
 
 
@@ -151,13 +149,54 @@ app.listen(PORT, ()=>{
 
 
 
-app.get("/students/sememster/:semester",(req,res)=> {
-  const semester = paraInt(req.params.semester);
 
-  if(isNaN(semester)){
-    return res.status(400).json({message: "Not found"});
-  }
 
-  const result = students.filter(s => s.semester === semester);
-  res.status(200).json(result)
-})
+
+
+
+
+// app.get("/students/semester/:semester", (req, res) => {
+//   const semester = parseInt(req.params.semester);
+
+//   if (isNaN(semester)) {
+//     return res.status(400).json({ message: "Not found" });
+//   }
+//   const result = students.filter(s => s.semester === semester);
+//   res.status(200).json(result);
+// });
+
+
+// app.get("/students/semester/:semester", (req, res) => {
+//   const semester = parseInt(req.params.semester);
+
+//   if (isNaN(semester)) {
+//     return res.status(400).json({ message: "not found" });
+//   }
+
+//   const result = students.filter(s => s.semester === semester);
+
+//   if (result.length === 0) {
+//     return res.status(404).json({ message: "Students not found" });
+//   }
+
+//   res.status(200).json(result);
+// })
+
+
+// app.get("/students/cgpa/above/:value", (req, res) => {
+//   const value = paraInt(req.params.value);
+
+//   if(isNaN(value)){
+//     return res.status(400).json({message:"Not found"});
+//   }
+//   const result = students.filter(s => s.cgpa > value);
+//   res.status(200).json(result);
+// });
+
+
+
+
+// app.get("/students/sorted/cgpa", (req, res) => {
+//   const sorted = [...students].sorted((a,b) => b.cgpa - a.cgpa);
+//   res.status(200).json(sorted);
+// })
