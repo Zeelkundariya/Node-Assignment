@@ -175,6 +175,6 @@ npm start
 
 
 # Deployed link
-Render : 
-Postman : 
+Render : https://node-assignment-4-izgr.onrender.com
+Postman : https://documenter.getpostman.com/view/50840741/2sBXcHheBR
 
