@@ -1,8 +1,8 @@
-const express=require("express");
-const cors=require("cors");
+const express = require("express");
+const cors = require("cors");
 
-const app=express();
-const port=3001;
+const app = express();
+const port = 3001;
 
 app.use(cors());
 app.use(express.json());
@@ -49,7 +49,6 @@ const products = [
     rating: 4.1
   }
 ];
-//Routes 
 
 app.get("/products", (req, res) => {
   res.status(200).json(products);
@@ -58,11 +57,17 @@ app.get("/products", (req, res) => {
 
 app.get("/products/:id", (req, res) => {
   const id = parseInt(req.params.id);
+  let product = null;
 
-  const product = products.find(p => p.id === id);
+  for (let i = 0; i < products.length; i++) {
+    if (products[i].id === id) {
+      product = products[i];
+      break;
+    }
+  }
 
   if (!product) {
-    return res.status(404).json({ message: "  not found" });
+    return res.status(404).json({ message: "not found" });
   }
 
   res.status(200).json(product);
@@ -70,27 +75,33 @@ app.get("/products/:id", (req, res) => {
 
 
 app.get("/products/category/:categoryName", (req, res) => {
-  const categoryName = req.params.categoryName;
+  const categoryName = req.params.categoryName.toLowerCase();
+  const result = [];
 
-  const filteredProducts = products.filter(
-    p => p.category.toLowerCase() === categoryName.toLowerCase()
-  );
+  for (let i = 0; i < products.length; i++) {
+    if (products[i].category.toLowerCase() === categoryName) {
+      result.push(products[i]);
+    }
+  }
 
-  res.status(200).json(filteredProducts);
+  res.status(200).json(result);
 });
 
 
 app.post("/products", (req, res) => {
-  const { name, category, price, stock, rating } = req.body;
+  const newProduct = {};
 
-  const newProduct = {
-    id: products.length ? products[products.length - 1].id + 1 : 1,
-    name,
-    category,
-    price,
-    stock,
-    rating
-  };
+  if (products.length > 0) {
+    newProduct.id = products[products.length - 1].id + 1;
+  } else {
+    newProduct.id = 1;
+  }
+
+  newProduct.name = req.body.name;
+  newProduct.category = req.body.category;
+  newProduct.price = req.body.price;
+  newProduct.stock = req.body.stock;
+  newProduct.rating = req.body.rating;
 
   products.push(newProduct);
 
@@ -100,22 +111,28 @@ app.post("/products", (req, res) => {
 
 app.put("/products/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const index = products.findIndex(p => p.id === id);
+  let index = -1;
+
+  for (let i = 0; i < products.length; i++) {
+    if (products[i].id === id) {
+      index = i;
+      break;
+    }
+  }
 
   if (index === -1) {
     return res.status(404).json({ message: "not found" });
   }
 
-  const { name, category, price, stock, rating } = req.body;
+  const Product = {};
+  Product.id = id;
+  Product.name = req.body.name;
+  Product.category = req.body.category;
+  Product.price = req.body.price;
+  Product.stock = req.body.stock;
+  Product.rating = req.body.rating;
 
-  products[index] = {
-    id,
-    name,
-    category,
-    price,
-    stock,
-    rating
-  };
+  products[index] = Product;
 
   res.status(200).json(products[index]);
 });
@@ -123,33 +140,55 @@ app.put("/products/:id", (req, res) => {
 
 app.put("/products/:id/stock", (req, res) => {
   const id = parseInt(req.params.id);
-  const product = products.find(p => p.id === id);
+  let product = null;
+
+  for (let i = 0; i < products.length; i++) {
+    if (products[i].id === id) {
+      product = products[i];
+      break;
+    }
+  }
 
   if (!product) {
     return res.status(404).json({ message: "not found" });
   }
 
   product.stock = req.body.stock;
-
   res.status(200).json(product);
 });
 
 
 app.put("/products/:id/price", (req, res) => {
   const id = parseInt(req.params.id);
-  const product = products.find(p => p.id === id);
+  let product = null;
+
+  for (let i = 0; i < products.length; i++) {
+    if (products[i].id === id) {
+      product = products[i];
+      break;
+    }
+  }
 
   if (!product) {
     return res.status(404).json({ message: "not found" });
   }
 
   product.price = req.body.price;
-
   res.status(200).json(product);
 });
 
 
-
-app.listen(port, ()=>{
-    console.log(`server running on http://localhost:${port}`);
+app.listen(port, () => {
+  console.log(`server running on http://localhost:${port}`);
 });
+
+
+
+
+
+
+
+
+
+
+

@@ -91,3 +91,90 @@ npm start
 # Deployed link
 Render : https://node-assignment-3-1hpo.onrender.com
 Postman : https://documenter.getpostman.com/view/50840741/2sBXcGEzuD
+
+
+
+# Project title
+ State Statistics Management API
+
+# Objective
+The objective of the State Statistics Management API project is to design and implement a fully functional RESTful API using Express.js that manages statistical data of Indian states using an in-memory data structure.
+
+# Implemented Routes
+GET /states -> Get all states
+
+GET /states/:id -> Get state by ID
+
+GET /states/highest-gdp -> Get state with highest GDP
+
+POST /states -> Add new state
+
+PUT /states/:id -> Replace full state
+
+PUT /states/:id/budget -> Update budget
+
+PUT /states/:id/population -> Update population
+
+PATCH /states/:id/literacy -> Update literacy
+
+PATCH /states/:id/gdp -> Update GDP
+
+PATCH /states/:id -> Update any field
+
+DELETE /states/:id -> Delete by ID
+
+DELETE /states/name/:stateName -> Delete by name
+
+DELETE /states/low-literacy/:percentage -> Delete low literacy states
+
+# Sample URLs
+GET /states
+http://localhost:3000/states
+
+GET /states/:id
+http://localhost:3000/states/7
+
+GET /states/highest-gdp
+http://localhost:3000/states/highest
+
+POST /states
+http://localhost:3000/states
+
+PUT /states/:id
+http://localhost:3000/states/4
+
+PUT /states/:id/budget
+http://localhost:3000/states/
+
+PUT /states/:id/population
+http://localhost:3000/states/5
+
+PATCH /states/:id/literacy
+http://localhost:3000/states/8
+
+PATCH /states/:id/gdp
+http://localhost:3000/states/7
+
+PATCH /states/:id
+http://localhost:3000/states/6
+
+DELETE /states/:id
+http://localhost:3000/states/:id
+
+DELETE /states/name/:stateName
+http://localhost:3000/states/name/:state
+
+DELETE /states/low-literacy/:percentage
+http://localhost:3000/states/low-literacy/:percentage
+
+
+
+# Steps to Run Locally
+npm install
+npm start
+
+
+# Deployed link
+Render : 
+Postman : 
+
